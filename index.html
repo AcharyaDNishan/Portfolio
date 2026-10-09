@@ -307,6 +307,7 @@
     font-size:13px; font-weight:600;
     box-shadow:var(--shadow);
     animation:drift 6s ease-in-out infinite;
+    pointer-events:none;
   }
   .float-card i, .float-card .ic{
     width:30px; height:30px; border-radius:8px;
@@ -316,13 +317,13 @@
     color:var(--accent);
   }
   .float-card .ic-text{ font-weight:700; font-size:13px; }
-  .fc1{ top:2%; left:2%; animation-delay:0s;}
-  .fc2{ top:0%; right:0%; animation-delay:.6s;}
-  .fc3{ top:34%; left:20%; animation-delay:1.2s;}
-  .fc4{ top:38%; right:6%; animation-delay:1.8s;}
-  .fc5{ bottom:10%; left:6%; animation-delay:2.4s;}
-  .fc6{ bottom:6%; right:2%; animation-delay:3s;}
-  .fc7{ bottom:22%; left:1%; animation-delay:.3s;}
+  .fc1{ top:2%; left:2%; animation-delay:0s; }
+  .fc2{ top:0%; right:0%; animation-delay:.6s; }
+  .fc3{ top:34%; left:20%; animation-delay:1.2s; }
+  .fc4{ top:38%; right:6%; animation-delay:1.8s; }
+  .fc5{ bottom:10%; left:6%; animation-delay:2.4s; }
+  .fc6{ bottom:6%; right:2%; animation-delay:3s; }
+  .fc7{ top:52%; left:4%; animation-delay:.3s; z-index:1; }
 
   @keyframes drift{
     0%,100%{ transform:translateY(0px); }
@@ -605,6 +606,7 @@
     .float-card i, .float-card .ic{ width:26px; height:26px; font-size:12px; }
     .fc3{ left:12%; }
     .fc4{ right:2%; }
+    .fc7{ left:2%; top:54%; }
   }
   @media (max-width: 600px){
     .topbar .eyebrow{ display:none; }
@@ -613,6 +615,7 @@
     .stat-row{ gap:26px; }
     .form-row{ grid-template-columns:1fr; }
     .hero-actions .btn{ width:100%; justify-content:center; }
+    .fc7{ display:none; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -803,7 +806,7 @@
           <div class="hero-greet reveal" style="--d:.05s">Hi, I'm</div>
           <h1 class="hero-name reveal" style="--d:.12s">Nishan <span class="accent">Acharya.</span></h1>
           <div class="hero-role reveal" style="--d:.2s"><span id="typed">Full Stack Developer</span><span class="caret" aria-hidden="true"></span></div>
-          <p class="hero-sub reveal" style="--d:.28s">I build impactful, user-centric software — from full-stack web platforms to machine learning tools — with clean code and a lot of curiosity.</[...]
+          <p class="hero-sub reveal" style="--d:.28s">I build impactful, user-centric software — from full-stack web platforms to machine learning tools — with clean code and a lot of curiosity.</p>
           <div class="hero-actions reveal" style="--d:.36s">
             <a href="#projects" class="btn btn-primary">View My Work <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             <a href="#contact" class="btn btn-outline">Contact Me <i class="fa-regular fa-comment-dots" aria-hidden="true"></i></a>
@@ -817,7 +820,7 @@
 
         <div class="hero-visual reveal" style="--d:.2s">
           <div class="profile-photo">
-            <img src="https://lh3.googleusercontent.com/a/ACg8ocLKOXHUWhZt9PaDb2lsvgqwjmHMe3Wi4V9iMWCNdUGF27s4nrk=s288-c-no" alt="Portrait of Nishan Acharya" onerror="this.onerror=null; this.src='data[...]
+            <img src="https://lh3.googleusercontent.com/a/ACg8ocLKOXHUWhZt9PaDb2lsvgqwjmHMe3Wi4V9iMWCNdUGF27s4nrk=s288-c-no" alt="Portrait of Nishan Acharya" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23e63946%22/%3E%3Ctext x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2256%22 font-family=%22Arial%22%3EN%3C/text%3E%3C/svg%3E';">
           </div>
 
           <div class="float-card fc1"><div class="ic"><i class="fa-brands fa-python" aria-hidden="true"></i></div>Python</div>
@@ -844,7 +847,7 @@
           <div class="p-thumb"><div class="p-icon"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i></div></div>
           <div class="p-body">
             <h3>E-Class</h3>
-            <p>A feature-rich virtual classroom platform inspired by Google Classroom — with a competitive leaderboard, QR-based attendance, and a Class vs Class mode for inter-class academic compet[...]
+            <p>A feature-rich virtual classroom platform inspired by Google Classroom — with a competitive leaderboard, QR-based attendance, and a Class vs Class mode for inter-class academic competition.</p>
             <div class="tags">
               <span class="tag">Flask</span><span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">QR Attendance</span>
             </div>
@@ -881,7 +884,7 @@
         </div>
         <div class="about-text reveal" style="--d:.14s">
           <h3>Motivated builder, curious by default.</h3>
-          <p>I'm a Computer Science undergraduate at KIIT with hands-on experience across web development and machine learning. I like turning ideas into working software — whether that's a classroo[...]
+          <p>I'm a Computer Science undergraduate at KIIT with hands-on experience across web development and machine learning. I like turning ideas into working software — whether that's a classroom platform, a lightweight NLP tool, or a UI built for real users.</p>
           <p>I'm looking for opportunities to apply my technical skills in software engineering and build impactful, user-centric solutions.</p>
           <div class="interest-pills">
             <span>Web Development</span><span>Machine Learning</span><span>UI/UX Design</span>
@@ -1001,236 +1004,141 @@
             </div>
             <div class="field">
               <label for="cf-email">Email</label>
-              <input type="email" id="cf-email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="120" required>
+              <input type="email" id="cf-email" name="email" placeholder="Your email" autocomplete="email" maxlength="100" required>
             </div>
           </div>
           <div class="field">
-            <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" rows="5" placeholder="Tell me about the role or project…" maxlength="1000" required></textarea>
+            <label for="cf-subject">Subject</label>
+            <input type="text" id="cf-subject" name="subject" placeholder="Project / opportunity / hello" maxlength="120" required>
           </div>
-          <input type="text" id="cf-company" name="company" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" placeholder="Tell me a bit about your idea..." maxlength="1000" required></textarea>
+          </div>
+          <div class="field hp-field">
+            <label for="cf-check">Leave this blank</label>
+            <input type="text" id="cf-check" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">Send Message <i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
-            <span class="form-status" id="cf-status" role="status"></span>
+            <div class="form-status" aria-live="polite"></div>
           </div>
         </form>
       </div>
     </section>
 
-    <footer>
-      <div class="footer-socials">
-        <a href="https://github.com/AcharyaDNishan" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
-        <a href="https://www.linkedin.com/in/nishan-acharya-39045b311/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
-        <a href="mailto:n1sh4n12@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
-      </div>
-      Built by <span class="accent">Nishan Acharya</span> — © <span id="year">2026</span> All rights reserved.
-    </footer>
   </div>
 
   <button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
 
-<script>
-(function(){
-  'use strict';
-
-  /* ---------- Mobile menu ---------- */
-  const sidebar = document.getElementById('sidebar');
-  const backdrop = document.getElementById('backdrop');
-  const menuBtn = document.getElementById('menuToggle');
-  const closeBtn = document.getElementById('sidebarClose');
-
-  function openMenu(){
-    sidebar.classList.add('open');
-    backdrop.classList.add('show');
-    menuBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeMenu(){
-    sidebar.classList.remove('open');
-    backdrop.classList.remove('show');
-    menuBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-  menuBtn.addEventListener('click', openMenu);
-  closeBtn.addEventListener('click', closeMenu);
-  backdrop.addEventListener('click', closeMenu);
-  document.querySelectorAll('.nav-link').forEach(function(l){
-    l.addEventListener('click', closeMenu);
-  });
-
-  /* ---------- Scrollspy + progress + back-to-top ---------- */
-  const links = Array.from(document.querySelectorAll('.nav-link'));
-  const sections = links.map(l => document.querySelector(l.getAttribute('href')));
-  const progress = document.getElementById('progress');
-  const toTop = document.getElementById('toTop');
-
-  function onScroll(){
-    const y = window.scrollY + 180;
-    let idx = 0;
-    sections.forEach(function(sec, i){ if (sec && sec.offsetTop <= y) idx = i; });
-
-    // pin last link when scrolled to the very bottom
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8){
-      idx = links.length - 1;
-    }
-
-    links.forEach(l => l.classList.remove('active'));
-    if (links[idx]) links[idx].classList.add('active');
-
-    // scroll progress
-    const doc = document.documentElement;
-    const max = doc.scrollHeight - doc.clientHeight;
-    progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + '%';
-
-    // back to top visibility
-    toTop.classList.toggle('show', window.scrollY > 600);
-  }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  window.addEventListener('resize', onScroll);
-  onScroll(); // set correct state on load (don't wait for first scroll)
-
-  toTop.addEventListener('click', function(){
-    window.scrollTo({ top:0, behavior:'smooth' });
-  });
-
-  /* ---------- Typewriter ---------- */
-  const roles = ['Full Stack Developer', 'ML Enthusiast', 'Problem Solver', 'CS Undergraduate'];
-  const typedEl = document.getElementById('typed');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (reducedMotion){
-    typedEl.textContent = roles[0];
-  } else {
-    let roleIdx = 0, charIdx = 0, deleting = false;
-    (function tick(){
-      const current = roles[roleIdx];
-      typedEl.textContent = current.slice(0, charIdx);
-      if (!deleting){
-        charIdx++;
-        if (charIdx > current.length){
-          deleting = true;
-          setTimeout(tick, 1800);
-          return;
-        }
-        setTimeout(tick, 70 + Math.random() * 60);
-      } else {
-        charIdx--;
-        if (charIdx < 0){
-          deleting = false;
-          roleIdx = (roleIdx + 1) % roles.length;
-          setTimeout(tick, 350);
-          return;
-        }
-        setTimeout(tick, 32);
-      }
-    })();
-  }
-
-  /* ---------- Reveal on scroll ---------- */
-  if ('IntersectionObserver' in window && !reducedMotion){
-    const io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting){
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
           entry.target.classList.add('in');
-          io.unobserve(entry.target);
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  } else {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
-  }
+    }, { threshold: 0.18 });
+    revealEls.forEach((el) => observer.observe(el));
 
-  /* ---------- Auto year ---------- */
-  document.getElementById('year').textContent = new Date().getFullYear();
-})();
+    const progress = document.getElementById('progress');
+    function updateScrollProgress(){
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const width = total > 0 ? (window.scrollY / total) * 100 : 0;
+      progress.style.width = width + '%';
+    }
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
 
-/* =====================================================================
-   CONTACT FORM — strict validation, sanitization, rate limiting
-   (no backend exists on this static page, so submissions open the
-   visitor's mail app with a sanitized, escaped payload)
-   ===================================================================== */
-(function(){
-  'use strict';
-  const form = document.getElementById('contactForm');
-  if (!form) return;
-  const status = document.getElementById('cf-status');
-  const nameEl = document.getElementById('cf-name');
-  const emailEl = document.getElementById('cf-email');
-  const msgEl = document.getElementById('cf-message');
-  const honeypot = document.getElementById('cf-company');
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('backdrop');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-  const NAME_RE = /^[\p{L}][\p{L} .'-]{1,59}$/u;  /* letters from any language */
-  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  const COOLDOWN_KEY = 'nishan-form-last-sent';
-  const COOLDOWN_MS = 60000; /* 1 minute rate limit per visitor */
-
-  /* Plain-text sanitization: strip control chars, trim, enforce length limits.
-     (No HTML escaping here — the payload is plain text, not HTML.) */
-  function sanitize(v){
-    return String(v || '').replace(/[\u0000-\u001F\u007F]/g, ' ').trim();
-  }
-  function setStatus(msg){ status.textContent = msg; }
-  function mark(el, bad){ el.classList.toggle('invalid', !!bad); }
-  function remainingCooldown(){
-    try {
-      const last = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
-      return Math.max(0, COOLDOWN_MS - (Date.now() - last));
-    } catch(e){ return 0; }
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    /* Rate limiting */
-    const wait = remainingCooldown();
-    if (wait > 0){
-      setStatus('Please wait ' + Math.ceil(wait / 1000) + 's before sending again.');
-      return;
+    function setSidebar(open){
+      sidebar.classList.toggle('open', open);
+      backdrop.classList.toggle('show', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
     }
 
-    /* Honeypot bot trap — silently accept */
-    if (honeypot.value){
-      setStatus('Thanks — your message has been sent.');
-      form.reset();
-      return;
-    }
-
-    /* Strict validation + sanitization */
-    const n = sanitize(nameEl.value);
-    const em = sanitize(emailEl.value);
-    const msg = sanitize(msgEl.value);
-    let ok = true;
-
-    if (!NAME_RE.test(n)){ mark(nameEl, true); ok = false; } else { mark(nameEl, false); }
-    if (!EMAIL_RE.test(em) || em.length > 120){ mark(emailEl, true); ok = false; } else { mark(emailEl, false); }
-    if (msg.length < 10 || msg.length > 1000){ mark(msgEl, true); ok = false; } else { mark(msgEl, false); }
-
-    if (!ok){
-      setStatus('Please fix the highlighted fields and try again.');
-      return;
-    }
-
-    /* Sanitized plain-text payload (URL-encoded for the mailto link) */
-    const subject = 'Portfolio contact from ' + n;
-    const body = 'Name: ' + n + '\nEmail: ' + em + '\n\n' + msg;
-    const href = 'mailto:nishanacharya2006@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-    /* Record submission time for the rate limit */
-    try { localStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch(err){}
-
-    setStatus('Opening your email app…');
-    window.setTimeout(function(){ window.location.href = href; }, 250);
-    form.reset();
-  });
-
-  ['input','change'].forEach(function(ev){
-    [nameEl, emailEl, msgEl].forEach(function(el){
-      el.addEventListener(ev, function(){ el.classList.remove('invalid'); });
+    menuToggle.addEventListener('click', () => {
+      setSidebar(!sidebar.classList.contains('open'));
     });
-  });
-})();
-</script>
+    sidebarClose.addEventListener('click', () => setSidebar(false));
+    backdrop.addEventListener('click', () => setSidebar(false));
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 760) setSidebar(false);
+        navLinks.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
 
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) toTop.classList.add('show');
+      else toTop.classList.remove('show');
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const typedEl = document.getElementById('typed');
+    const roles = ['Full Stack Developer', 'Machine Learning Enthusiast', 'Problem Solver'];
+    let roleIndex = 0;
+    function typeLoop(){
+      const current = roles[roleIndex];
+      let charIndex = 0;
+      typedEl.textContent = '';
+      const timer = setInterval(() => {
+        typedEl.textContent += current[charIndex] || '';
+        charIndex++;
+        if (charIndex > current.length) {
+          clearInterval(timer);
+          setTimeout(() => {
+            roleIndex = (roleIndex + 1) % roles.length;
+            typeLoop();
+          }, 1100);
+        }
+      }, 90);
+    }
+    typeLoop();
+
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.querySelector('.form-status');
+
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const botField = document.getElementById('cf-check');
+      if (botField.value.trim() !== '') {
+        formStatus.textContent = 'Submission blocked.';
+        return;
+      }
+
+      const name = document.getElementById('cf-name');
+      const email = document.getElementById('cf-email');
+      const subject = document.getElementById('cf-subject');
+      const message = document.getElementById('cf-message');
+
+      let valid = true;
+      [name, email, subject, message].forEach(field => {
+        if (!field.value.trim()) {
+          valid = false;
+          field.classList.add('invalid');
+        } else {
+          field.classList.remove('invalid');
+        }
+      });
+
+      if (!valid) {
+        formStatus.textContent = 'Please fill in all required fields.';
+        return;
+      }
+
+      formStatus.textContent = 'Thanks! Your message is ready to be sent.';
+      contactForm.reset();
+    });
+  </script>
 </body>
 </html>
