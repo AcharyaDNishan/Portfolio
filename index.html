@@ -999,3 +999,238 @@
               <label for="cf-name">Name</label>
               <input type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name" maxlength="60" required>
             </div>
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="120" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" placeholder="Tell me about the role or project…" maxlength="1000" required></textarea>
+          </div>
+          <input type="text" id="cf-company" name="company" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Send Message <i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+            <span class="form-status" id="cf-status" role="status"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-socials">
+        <a href="https://github.com/AcharyaDNishan" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+        <a href="https://www.linkedin.com/in/nishan-acharya-39045b311/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+        <a href="mailto:n1sh4n12@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+      </div>
+      Built by <span class="accent">Nishan Acharya</span> — © <span id="year">2026</span> All rights reserved.
+    </footer>
+  </div>
+
+  <button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- Mobile menu ---------- */
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('backdrop');
+  const menuBtn = document.getElementById('menuToggle');
+  const closeBtn = document.getElementById('sidebarClose');
+
+  function openMenu(){
+    sidebar.classList.add('open');
+    backdrop.classList.add('show');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('show');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  menuBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  document.querySelectorAll('.nav-link').forEach(function(l){
+    l.addEventListener('click', closeMenu);
+  });
+
+  /* ---------- Scrollspy + progress + back-to-top ---------- */
+  const links = Array.from(document.querySelectorAll('.nav-link'));
+  const sections = links.map(l => document.querySelector(l.getAttribute('href')));
+  const progress = document.getElementById('progress');
+  const toTop = document.getElementById('toTop');
+
+  function onScroll(){
+    const y = window.scrollY + 180;
+    let idx = 0;
+    sections.forEach(function(sec, i){ if (sec && sec.offsetTop <= y) idx = i; });
+
+    // pin last link when scrolled to the very bottom
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8){
+      idx = links.length - 1;
+    }
+
+    links.forEach(l => l.classList.remove('active'));
+    if (links[idx]) links[idx].classList.add('active');
+
+    // scroll progress
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + '%';
+
+    // back to top visibility
+    toTop.classList.toggle('show', window.scrollY > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll);
+  onScroll(); // set correct state on load (don't wait for first scroll)
+
+  toTop.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  /* ---------- Typewriter ---------- */
+  const roles = ['Full Stack Developer', 'ML Enthusiast', 'Problem Solver', 'CS Undergraduate'];
+  const typedEl = document.getElementById('typed');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion){
+    typedEl.textContent = roles[0];
+  } else {
+    let roleIdx = 0, charIdx = 0, deleting = false;
+    (function tick(){
+      const current = roles[roleIdx];
+      typedEl.textContent = current.slice(0, charIdx);
+      if (!deleting){
+        charIdx++;
+        if (charIdx > current.length){
+          deleting = true;
+          setTimeout(tick, 1800);
+          return;
+        }
+        setTimeout(tick, 70 + Math.random() * 60);
+      } else {
+        charIdx--;
+        if (charIdx < 0){
+          deleting = false;
+          roleIdx = (roleIdx + 1) % roles.length;
+          setTimeout(tick, 350);
+          return;
+        }
+        setTimeout(tick, 32);
+      }
+    })();
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  if ('IntersectionObserver' in window && !reducedMotion){
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  /* ---------- Auto year ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+
+/* =====================================================================
+   CONTACT FORM — strict validation, sanitization, rate limiting
+   (no backend exists on this static page, so submissions open the
+   visitor's mail app with a sanitized, escaped payload)
+   ===================================================================== */
+(function(){
+  'use strict';
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  const status = document.getElementById('cf-status');
+  const nameEl = document.getElementById('cf-name');
+  const emailEl = document.getElementById('cf-email');
+  const msgEl = document.getElementById('cf-message');
+  const honeypot = document.getElementById('cf-company');
+
+  const NAME_RE = /^[\p{L}][\p{L} .'-]{1,59}$/u;  /* letters from any language */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const COOLDOWN_KEY = 'nishan-form-last-sent';
+  const COOLDOWN_MS = 60000; /* 1 minute rate limit per visitor */
+
+  /* Plain-text sanitization: strip control chars, trim, enforce length limits.
+     (No HTML escaping here — the payload is plain text, not HTML.) */
+  function sanitize(v){
+    return String(v || '').replace(/[\u0000-\u001F\u007F]/g, ' ').trim();
+  }
+  function setStatus(msg){ status.textContent = msg; }
+  function mark(el, bad){ el.classList.toggle('invalid', !!bad); }
+  function remainingCooldown(){
+    try {
+      const last = parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10);
+      return Math.max(0, COOLDOWN_MS - (Date.now() - last));
+    } catch(e){ return 0; }
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    /* Rate limiting */
+    const wait = remainingCooldown();
+    if (wait > 0){
+      setStatus('Please wait ' + Math.ceil(wait / 1000) + 's before sending again.');
+      return;
+    }
+
+    /* Honeypot bot trap — silently accept */
+    if (honeypot.value){
+      setStatus('Thanks — your message has been sent.');
+      form.reset();
+      return;
+    }
+
+    /* Strict validation + sanitization */
+    const n = sanitize(nameEl.value);
+    const em = sanitize(emailEl.value);
+    const msg = sanitize(msgEl.value);
+    let ok = true;
+
+    if (!NAME_RE.test(n)){ mark(nameEl, true); ok = false; } else { mark(nameEl, false); }
+    if (!EMAIL_RE.test(em) || em.length > 120){ mark(emailEl, true); ok = false; } else { mark(emailEl, false); }
+    if (msg.length < 10 || msg.length > 1000){ mark(msgEl, true); ok = false; } else { mark(msgEl, false); }
+
+    if (!ok){
+      setStatus('Please fix the highlighted fields and try again.');
+      return;
+    }
+
+    /* Sanitized plain-text payload (URL-encoded for the mailto link) */
+    const subject = 'Portfolio contact from ' + n;
+    const body = 'Name: ' + n + '\nEmail: ' + em + '\n\n' + msg;
+    const href = 'mailto:nishanacharya2006@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    /* Record submission time for the rate limit */
+    try { localStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch(err){}
+
+    setStatus('Opening your email app…');
+    window.setTimeout(function(){ window.location.href = href; }, 250);
+    form.reset();
+  });
+
+  ['input','change'].forEach(function(ev){
+    [nameEl, emailEl, msgEl].forEach(function(el){
+      el.addEventListener(ev, function(){ el.classList.remove('invalid'); });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
